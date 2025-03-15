@@ -14,38 +14,44 @@ let ComputerChoice = () => {
     return ComputerChoice
 }
 
-const compItem = document.querySelector(".comp-item")
-compItem.textContent = ComputerChoice()
-
 let HumanChoice = () => {
     let HumanChoice = prompt("Please choice your item: ").toLowerCase()
     return HumanChoice
 }
 
-let RockPaperScissorGame = (ComputerScore, HumanScore) => {
-    let getComputerChoice = ComputerChoice()
-    let getHumanChoice = HumanChoice()
+let gameLogicResult = (getHumanChoice, getComputerChoice) => {
 
+    let result = undefined;
 
     if (!ItemChoice.includes(getHumanChoice)) {
         console.error("Your item does not exists!")
     }
     else {
         if ((getComputerChoice == ItemChoice[0] && getHumanChoice == ItemChoice[1]) || 
-        (getComputerChoice == ItemChoice[1] && getHumanChoice == ItemChoice[0]) ||
-            (getComputerChoice == ItemChoice[2] && getHumanChoice == ItemChoice[1])
+            (getComputerChoice == ItemChoice[1] && getHumanChoice == ItemChoice[0]) ||
+                (getComputerChoice == ItemChoice[2] && getHumanChoice == ItemChoice[1])
         ){
-        ComputerScore++;
-        console.log("You lose! Try again.")
+            // ComputerScore++;
+            console.log("You lose! Try again.")
+            result = "You lose! Try again."
         }
         else if (getComputerChoice == getHumanChoice) {
-        undefined
+            result = "Tie" 
         }
         else {
-        HumanScore++;
-        console.log("You win!")
+            //HumanScore++;
+            console.log(`DEBUG: ${getComputerChoice} ${getHumanChoice}`)
+            console.log("You win!")
+            result = "You win"
         }
     }
+    return result
+}
+
+let RockPaperScissorGame = (ComputerScore, HumanScore) => {
+    let getComputerChoice = ComputerChoice()
+    let getHumanChoice = HumanChoice()
+
     console.log(`Computer: ${getComputerChoice} --- Human: ${getHumanChoice}`)
     console.log(`Current score:\nComputer: ${ComputerScore}\nHuman: ${HumanScore}`)
 }
@@ -65,5 +71,15 @@ let PlayGame = (Round) => {
         console.log("You lose the game :(rock")
     }
 }
+
+const humanItem = document.querySelector(".human-item")
+humanItem.textContent = HumanChoice()
+
+const compItem = document.querySelector(".comp-item")
+compItem.textContent = ComputerChoice()
+
+const gameResult = document.querySelector("#result")
+gameResult.textContent = gameLogicResult(humanItem.textContent, 
+                                            compItem.textContent)
 
 // PlayGame(2)
