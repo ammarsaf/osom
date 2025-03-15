@@ -14,6 +14,9 @@ let ComputerChoice = () => {
     return ComputerChoice
 }
 
+const compItem = document.querySelector(".comp-item")
+compItem.textContent = ComputerChoice()
+
 let HumanChoice = () => {
     let HumanChoice = prompt("Please choice your item: ").toLowerCase()
     return HumanChoice
