@@ -20,8 +20,8 @@ let HumanChoice = () => {
 }
 
 let gameLogicResult = (getHumanChoice, getComputerChoice) => {
-
     let result = undefined;
+    let scores = {"human": 0, "bot": 0}
 
     if (!ItemChoice.includes(getHumanChoice)) {
         console.error("Your item does not exists!")
@@ -32,6 +32,8 @@ let gameLogicResult = (getHumanChoice, getComputerChoice) => {
                 (getComputerChoice == ItemChoice[2] && getHumanChoice == ItemChoice[1])
         ){
             // ComputerScore++;
+            scores["bot"]++;
+            console.log(scores)
             console.log("You lose! Try again.")
             result = "You lose! Try again."
         }
@@ -40,12 +42,13 @@ let gameLogicResult = (getHumanChoice, getComputerChoice) => {
         }
         else {
             //HumanScore++;
-            console.log(`DEBUG: ${getComputerChoice} ${getHumanChoice}`)
+            scores["human"]++;
+            console.log(scores)
             console.log("You win!")
             result = "You win"
         }
     }
-    return result
+    return [result, scores]
 }
 
 let RockPaperScissorGame = (ComputerScore, HumanScore) => {
@@ -78,8 +81,16 @@ humanItem.textContent = HumanChoice()
 const compItem = document.querySelector(".comp-item")
 compItem.textContent = ComputerChoice()
 
+const [finalResult, finalScores] = gameLogicResult(humanItem.textContent, compItem.textContent)
+
 const gameResult = document.querySelector("#result")
-gameResult.textContent = gameLogicResult(humanItem.textContent, 
-                                            compItem.textContent)
+gameResult.textContent = finalResult
+
+const humanScore = document.querySelector(".player-score")
+console.log(humanScore.textContent)
+humanScore.textContent = finalScores["human"]
+
+const botScore = document.querySelector(".bot-score")
+botScore.textContent = finalScores["bot"]
 
 // PlayGame(2)
